@@ -11,5 +11,5 @@ if (process.env.JAWSDB_URL) {
     database: 'todoagain_db'
   })
 }
-
+connection.connect();
 module.exports = connection;
