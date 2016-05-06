@@ -7,9 +7,10 @@ if (process.env.JAWSDB_URL) {
   connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'hacktheplanet',
+    password: 'password',
     database: 'todoagain_db'
-  })
-}
+  });
+};
+
 connection.connect();
 module.exports = connection;
