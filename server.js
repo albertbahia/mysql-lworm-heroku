@@ -21,11 +21,6 @@ var Todo = require('./models/todo.js');
 
 // Routes
 app.get('/', function(req, res) {
-  // Todo.findAll({}).then(function(todos) {
-  //   res.render('home', {todos})
-  // });
-
-  // console.log(Todo);
   Todo.getAllTodos(function(todos) {
     res.render('home', {todos})
   });
@@ -33,19 +28,10 @@ app.get('/', function(req, res) {
 
 app.post('/addTodo', function(req,res) {
   var description = req.body.description;
-  console.log(description);
-  // Todo.create({
+  // console.log(description);
   Todo.createTodo(description, function(todos) {
     res.redirect('/');
   })
-  //   description: description
-  // }).then(function(result) {
-  //   res.redirect('/');
-  // }).catch(function(err) {
-  //   console.log('Error: ' + err);
-  // });
-
-
 });
 
 // Node port listener with database connection while Express server is running
