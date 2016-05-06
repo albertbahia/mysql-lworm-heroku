@@ -9,11 +9,6 @@ var app = express();
 // Middleware
 app.use(bodyParser.urlencoded({extended: false}));
 
-// Database setup
-
-// Get the Todo model
-var Todo = require('./models/todo.js');
-
 // Setup Handlebars with Express
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -21,21 +16,28 @@ app.set('view engine', 'handlebars');
 // Define node port
 var PORT = process.env.PORT || 8000;
 
+// Get the Todo model
+var Todo = require('./models/todo.js');
+
 // Routes
 app.get('/', function(req, res) {
   // Todo.findAll({}).then(function(todos) {
   //   res.render('home', {todos})
   // });
+
+  // console.log(Todo);
   Todo.getAllTodos(function(todos) {
     res.render('home', {todos})
   });
 });
 
 app.post('/addTodo', function(req,res) {
-  // console.log(req.body);
   var description = req.body.description;
-
+  console.log(description);
   // Todo.create({
+  Todo.createTodo(description, function(todos) {
+    res.redirect('/');
+  })
   //   description: description
   // }).then(function(result) {
   //   res.redirect('/');
@@ -47,8 +49,6 @@ app.post('/addTodo', function(req,res) {
 });
 
 // Node port listener with database connection while Express server is running
-connection.sync().then(function() {
-  app.listen(PORT, function(err) {
-    console.log('Listening on port ' + PORT);
-  });
+app.listen(PORT, function(err) {
+  console.log('Listening on port ' + PORT);
 });
